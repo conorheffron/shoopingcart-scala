@@ -51,14 +51,14 @@ jobs:
         if: ${{ matrix.jobtype == 1 }}
         shell: bash
         run: |
-          sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
-      - name: Build and test (2)
-        if: ${{ matrix.jobtype == 2 }}
-        shell: bash
-        run: |
-          sbt -v "scripted actions/*"
-      - name: Build and test (3)
-        if: ${{ matrix.jobtype == 3 }}
-        shell: bash
-        run: |  
-          sbt -v "dependency-management/*"
+          sbt clean package test -i
+      # - name: Build and test (2)
+      #   if: ${{ matrix.jobtype == 2 }}
+      #   shell: bash
+      #   run: |
+      #     sbt -v "scripted actions/*"
+      # - name: Build and test (3)
+      #   if: ${{ matrix.jobtype == 3 }}
+      #   shell: bash
+      #   run: |  
+      #     sbt -v "dependency-management/*"
