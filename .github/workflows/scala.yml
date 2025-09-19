@@ -1,0 +1,64 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Scala CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            java: 21
+            jobtype: 1
+          # - os: ubuntu-latest
+          #   java: 21
+          #   jobtype: 2
+          # - os: windows-latest
+          #   java: 21
+          #   jobtype: 2
+          # - os: ubuntu-latest
+          #   java: 21
+          #   jobtype: 3
+    runs-on: ${{ matrix.os }}
+    env:
+      JAVA_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+      JVM_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: sbt
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and test (1)
+        if: ${{ matrix.jobtype == 1 }}
+        shell: bash
+        run: |
+          sbt clean package test -info
+      # - name: Build and test (2)
+      #   if: ${{ matrix.jobtype == 2 }}
+      #   shell: bash
+      #   run: |
+      #     sbt -v "scripted actions/*"
+      # - name: Build and test (3)
+      #   if: ${{ matrix.jobtype == 3 }}
+      #   shell: bash
+      #   run: |  
+      #     sbt -v "dependency-management/*"
