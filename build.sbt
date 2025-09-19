@@ -9,7 +9,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "fp-zio",
-    version := "1.0.0-RELEASE",
+    version := "1.0.1-RELEASE",
 
     scalaVersion := scala3Version,
 
