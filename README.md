@@ -1,4 +1,7 @@
 ## Instructions for the assignment
+
+[![Scala CI](https://github.com/conorheffron/shoopingcart-scala/actions/workflows/scala.yml/badge.svg)](https://github.com/conorheffron/shoopingcart-scala/actions/workflows/scala.yml)
+
 ### If cloning the repo
 1. Clone this repository on your machine.
 2. Use your IDE of choice to complete the assignment.
