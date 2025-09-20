@@ -1,6 +1,9 @@
 package com.siriusxm.example.cart
 
-import zio.*
+import zio.UIO
+import zio.Task
+import zio.Ref
+import zio.ZIO
 import com.siriusxm.example.cart.CerealProductInfo.priceLookup
 
 import scala.math.BigDecimal
@@ -8,10 +11,10 @@ import scala.math.BigDecimal
 object ShoppingCart:
   // Tax payable, charged at 12.5% on the subtotal
   private val TaxRate = 0.125d
-  val DecimalScale = 2 // money rounded to 2 decimal places
-  val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP
+  private val DecimalScale = 2 // money rounded to 2 decimal places
+  private val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP
 
-  type Entries = Map[ProductTitle, (Price, Count)]
+  private type Entries = Map[ProductTitle, (Price, Count)]
   private type ProductTitle = String
   private type Price = Float
   private type Count = Int
@@ -23,12 +26,9 @@ object ShoppingCart:
   case class ProductInfo(title: String, price: Float)
 
   class ShoppingCart(private val data: Ref[Entries]):
-    import ShoppingCart.*
-
     /** Add line item by product title, looking up price. */
     def addLineItem(title: String, count: Int): Task[Unit] =
-      for
-        price <- priceLookup(title)
+      for price <- priceLookup(title)
         _     <- addLineItem(ProductInfo(title, price), count)
       yield ()
 
