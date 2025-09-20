@@ -2,11 +2,11 @@ package com.siriusxm.example.cart
 
 import com.siriusxm.example.cart.ShoppingCart.ProductInfo
 import com.typesafe.scalalogging.Logger
-import sttp.client4.UriContext
+import sttp.client4.{UriContext, basicRequest}
 import sttp.client4.httpclient.zio.HttpClientZioBackend
-import sttp.client4.quick.*
-import sttp.client4.ziojson.*
-import zio.*
+import sttp.client4.ziojson.asJson
+import zio.Task
+import zio.ZIO
 import zio.json.{DeriveJsonDecoder, JsonDecoder}
 
 object CerealProductInfo:
@@ -28,5 +28,5 @@ object CerealProductInfo:
           resp <- req.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
           .response(asJson[ProductInfo])
           .send(backend)
-        ret <- ZIO.fromEither(resp.body.map(_.price))
+          ret <- ZIO.fromEither(resp.body.map(_.price))
       yield ret

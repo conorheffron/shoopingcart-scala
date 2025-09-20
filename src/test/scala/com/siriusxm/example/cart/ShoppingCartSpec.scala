@@ -1,22 +1,23 @@
 package com.siriusxm.example.cart
 
-import com.siriusxm.example.cart.ShoppingCart.*
-import zio.test.*
+import zio.test.assertTrue
+import zio.test.Spec
+import zio.test.TestEnvironment
+import zio.test.ZIOSpecDefault
 import zio.{Scope, ZIO}
 
-object ShoppingCartSpec extends zio.test.ZIOSpecDefault {
+object ShoppingCartSpec extends ZIOSpecDefault {
   val Tolerance = 0 // for sum comparisons
   val MaxPrice = 1E5
   val validProducts = Set("cheerios", "cornflakes", "frosties", "shreddies", "weetabix")
 
-  override def spec: Spec[TestEnvironment with Scope, Any] = suite("CerealProductInfo.priceLookup")(
+  override def spec: Spec[TestEnvironment & Scope, Any] = suite("CerealProductInfo.priceLookup")(
     test("Add 2 × cornflakes @ 2.52 each, " +
       "Add 1 × weetabix @ 9.98 each, " +
       "Subtotal = 15.02, " +
       "Tax = 1.88, " +
       "Total = 16.90") {
-      for
-        cart <- ShoppingCart.newCart
+      for cart <- ShoppingCart.newCart
         _ <- cart.addLineItem("cornflakes", 2)
         _ <- cart.addLineItem("weetabix", 1)
         subtotal <- cart.subtotal
