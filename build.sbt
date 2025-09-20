@@ -17,6 +17,8 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "com.softwaremill.sttp.client4" %% "zio-json" % V.sttp,
       "com.softwaremill.sttp.client4" %% "zio" % V.sttp,
+      "io.getquill" %% "quill-jdbc-zio" % V.quill,
+      "ch.qos.logback" % "logback-classic" % "1.5.18",
     ),
 
     // Test scope
