@@ -39,13 +39,9 @@ object ShoppingCart:
           case None =>
             (None, entries.updated(product.title, (product.price, addCount)))
           case Some((existingPrice, existingCount)) =>
-            if product.price == existingPrice then
-              (None, entries.updated(product.title, (existingPrice, existingCount + addCount)))
-            else
-              (Some(new RuntimeException(s"Unexpected error occurred for product ${product.title}")), entries)
+            (None, entries.updated(product.title, (existingPrice, existingCount + addCount)))
       }.flatMap {
-        case None    => ZIO.unit
-        case Some(e) => ZIO.fail(e)
+        case None => ZIO.unit
       }
 
     /** Subtotal, rounded. */
