@@ -1,4 +1,4 @@
-# shoopingcart-scala
+# shoppingcart-scala
 
 ## Tech:
  - SBT 1.11.6, Scala 3.7.2, ZIO 2
