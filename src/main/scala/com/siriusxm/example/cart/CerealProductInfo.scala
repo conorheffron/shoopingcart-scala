@@ -2,10 +2,9 @@ package com.siriusxm.example.cart
 
 import com.siriusxm.example.cart.ShoppingCart.ProductInfo
 import com.typesafe.scalalogging.Logger
-import sttp.client4.{UriContext, basicRequest}
 import sttp.client4.httpclient.zio.HttpClientZioBackend
 import sttp.client4.ziojson.asJson
-import zio.Task
+import sttp.client4.{UriContext, basicRequest}
 import zio.ZIO
 import zio.json.{DeriveJsonDecoder, JsonDecoder}
 
