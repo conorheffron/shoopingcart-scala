@@ -1,5 +1,7 @@
 # shoppingcart-scala
 
+[![Scala CI](https://github.com/conorheffron/shoppingcart-scala/actions/workflows/scala.yml/badge.svg)](https://github.com/conorheffron/shoppingcart-scala/actions/workflows/scala.yml)
+
 ## Tech:
  - SBT 1.11.6, Scala 3.7.2, ZIO 2
 
