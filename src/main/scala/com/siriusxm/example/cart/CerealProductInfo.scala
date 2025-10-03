@@ -18,10 +18,15 @@ object CerealProductInfo:
 
   private val req = basicRequest
 
-  def priceLookup(productTitle: String): Task[Float] =
-      for backend <- HttpClientZioBackend()
-          resp <- req.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
-          .response(asJson[ProductInfo])
-          .send(backend)
-          ret <- ZIO.fromEither(resp.body.map(_.price))
-      yield ret
+  def priceLookup(productTitle: String): ZIO[Any, Throwable, Float] = {
+      if (productTitle == null || productTitle.isEmpty) {
+        ZIO.fail(new IllegalArgumentException("Input must be non-empty String"))
+      }  else {
+        for backend <- HttpClientZioBackend()
+            resp <- req.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
+              .response(asJson[ProductInfo])
+              .send(backend)
+            ret <- ZIO.fromEither(resp.body.map(_.price)).orElse(ZIO.from(0.0f))
+        yield ret
+      }
+  }

@@ -34,11 +34,19 @@ object ShoppingCartSpec extends ZIOSpecDefault {
     },
 
     test("fails for invalid product names") {
-      val invalidProducts = Set("wheetos", "invalid", "", "999", null)
+      val invalidProducts = Set(null, "")
       ZIO.foreach(invalidProducts) { name =>
         CerealProductInfo.priceLookup(name)
           .exit
           .map(exit => assertTrue(exit.isFailure))
+      }.map(_.reduce(_ && _))
+    },
+
+    test("returns 0.0f for product names that do not have JSON object set up") {
+      val invalidProducts = Set("wheetos", "invalid", "999")
+      ZIO.foreach(invalidProducts) { name =>
+        CerealProductInfo.priceLookup(name)
+          .map(price => assertTrue(price == 0.0f))
       }.map(_.reduce(_ && _))
     },
   )

@@ -5,7 +5,7 @@ import zio.{Console, ZIO, ZIOAppDefault}
 
 object Main extends ZIOAppDefault {
 
-  val validProducts = Set("cheerios", "cornflakes", "frosties", "shreddies", "weetabix")
+  val validProducts = Set("cheerios", "cornflakes", "frosties", "shreddies", "weetabix", "fake_brand")
 
   override def run: ZIO[Any, Throwable, Unit] = {
     getProductInfo(validProducts).flatMap { resultString =>
