@@ -9,7 +9,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "shopping-cart",
-    version := "1.0.4-RELEASE",
+    version := "1.0.5-RELEASE",
 
     scalaVersion := scala3Version,
 
@@ -25,6 +25,10 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "dev.zio" %% "zio-test" % V.zio % Test,
       "dev.zio" %% "zio-test-sbt" % V.zio % Test,
+      "org.scalameta" %% "munit" % "1.0.4" % Test,
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )
+
+ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
+
