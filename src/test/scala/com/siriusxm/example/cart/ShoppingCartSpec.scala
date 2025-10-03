@@ -30,7 +30,7 @@ object ShoppingCartSpec extends ZIOSpecDefault {
       yield assertTrue((subtotal, tax, total, ni, nli) == (15.02, 1.88, 16.90, 3, 2))
     },
 
-    test("Add 5 × corn flakes 2 and fail") {
+    test("Add 6 x cornflakes & 1 x weetabix") {
       for cart <- ShoppingCart.newCart
           _ <- cart.addLineItem("cornflakes", 2)
           _ <- cart.addLineItem("cornflakes", 2)
