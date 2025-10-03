@@ -29,7 +29,7 @@ object ShoppingCart:
     /** Add line item by product title, looking up price. */
     def addLineItem(title: String, count: Int): Task[Unit] =
       for price <- priceLookup(title)
-        _     <- addLineItem(ProductInfo(title, price), count)
+        _ <- addLineItem(ProductInfo(title, price), count)
       yield ()
 
     /** Add line item by ProductInfo. */
@@ -68,5 +68,10 @@ object ShoppingCart:
         tax    <- taxPayable
       yield (st + tax).setScale(DecimalScale, RoundingMode)
 
-    def numLines: UIO[Int] =
+    /** Number of products in cart */
+    def numLineItems: UIO[Int] =
       data.get.map(_.size)
+
+    /** Number of items in cart */
+    def numItems: UIO[Int] =
+      data.get.map (entries => entries.values.map(_._2).sum)
