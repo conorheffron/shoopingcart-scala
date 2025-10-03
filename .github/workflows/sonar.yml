@@ -10,9 +10,22 @@ jobs:
     name: SonarQube
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup JDK
+        uses: actions/setup-java@v5
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: sbt
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and test (1)
+        if: ${{ matrix.jobtype == 1 }}
+        shell: bash
+        run: |
+          sbt clean package -info
+          sbt coverage test coverageReport
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
