@@ -42,7 +42,7 @@ object ShoppingCart:
             if product.price == existingPrice then
               (None, entries.updated(product.title, (existingPrice, existingCount + addCount)))
             else
-              (Some(new RuntimeException(s"Price in the Cart should not be changed in the middle for ${product.title}")), entries)
+              (Some(new RuntimeException(s"Unexpected error occurred for product ${product.title}")), entries)
       }.flatMap {
         case None    => ZIO.unit
         case Some(e) => ZIO.fail(e)
@@ -59,14 +59,14 @@ object ShoppingCart:
 
     /** Tax payable, rounded. */
     def taxPayable: UIO[BigDecimal] =
-      subtotal.map(subtot => (subtot * TaxRate).setScale(DecimalScale, RoundingMode))
+      subtotal.map(st => (st * TaxRate).setScale(DecimalScale, RoundingMode))
 
     /** Total payable, rounded. */
     def totalPayable: UIO[BigDecimal] =
       for
-        subtot <- subtotal
+        st <- subtotal
         tax    <- taxPayable
-      yield (subtot + tax).setScale(DecimalScale, RoundingMode)
+      yield (st + tax).setScale(DecimalScale, RoundingMode)
 
     def numLines: UIO[Int] =
       data.get.map(_.size)
