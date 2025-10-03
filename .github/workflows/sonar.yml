@@ -5,28 +5,42 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
 jobs:
   sonarqube:
-    name: SonarQube
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: ${{ matrix.java }}
-          cache: sbt
-      - name: Setup sbt launcher
-        uses: sbt/setup-sbt@v1
-      - name: Build and test (1)
-        if: ${{ matrix.jobtype == 1 }}
-        shell: bash
-        run: |
-          sbt clean package -info
-          sbt coverage test coverageReport
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      strategy:
+        fail-fast: false
+        matrix:
+          include:
+            - os: ubuntu-latest
+              java: 21
+              jobtype: 1
+      runs-on: ${{ matrix.os }}
+      env:
+        JAVA_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+        JVM_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+      name: SonarQube
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v5
+        - name: Setup JDK
+          uses: actions/setup-java@v5
+          with:
+            distribution: temurin
+            java-version: ${{ matrix.java }}
+            cache: sbt
+        - name: Setup sbt launcher
+          uses: sbt/setup-sbt@v1
+        - name: Build and test (1)
+          if: ${{ matrix.jobtype == 1 }}
+          shell: bash
+          run: |
+            sbt clean package -info
+            sbt coverage test coverageReport
+        - name: SonarQube Scan
+          uses: SonarSource/sonarqube-scan-action@v6
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
