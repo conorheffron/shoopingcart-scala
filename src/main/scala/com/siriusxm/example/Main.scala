@@ -9,14 +9,14 @@ object Main extends ZIOAppDefault {
 
   override def run: ZIO[Any, Throwable, Unit] = {
     getProductInfo(validProducts).flatMap { resultString =>
-      Console.printLine(resultString)
+      ZIO.logInfo(resultString)
     }
   }
 
   private def getProductInfo(validProducts: Set[String]): ZIO[Any, Throwable, String] = {
     ZIO.foreach(validProducts) { product =>
       CerealProductInfo.priceLookup(product).map { price =>
-        s"Product: $product, price=$price"
+        s"Product: ${product}, Price=${price}"
       }
     }.map(_.mkString("\n"))
   }
