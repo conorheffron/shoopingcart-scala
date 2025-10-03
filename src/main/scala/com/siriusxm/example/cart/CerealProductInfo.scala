@@ -11,11 +11,6 @@ import zio.json.{DeriveJsonDecoder, JsonDecoder}
 
 object CerealProductInfo:
   private val baseUrl = "https://raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main"
-//  https: //raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main/cheerios.json
-//  https: //raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main/cornflakes.js
-//  https: //raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main/frosties.json
-//  https: //raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main/shreddies.jso
-//  https: //raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main/weetabix.json
 
   private val logger = Logger[CerealProductInfo.type]
 
