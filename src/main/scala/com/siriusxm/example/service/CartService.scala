@@ -7,31 +7,31 @@ import zio.{Ref, Task, UIO}
 import java.math.RoundingMode
 import scala.math.BigDecimal
 
-object CartService extends CartI:
+object CartService extends CartServiceI:
 
   class ShoppingCart(private val data: Ref[Entries]):
-    /** Add line item by product title, looking up price. */
-    def addLineItem(title: String, count: Int): Task[Unit] =
+    /** Add line item by product title & quantity, findPriceByProductTitle provides price value if it exists. */
+    def addLineItem(title: String, quantity: Int): Task[Unit] =
       for price <- findPriceByProductTitle(title)
-          _ <- addLineItem(ProductInfo(title, price), count)
+          _ <- addLineItem(ProductInfo(title, price), quantity)
       yield ()
-
-    /** Add line item by ProductInfo. */
-    def addLineItem(product: ProductInfo, addCount: Int): Task[Unit] = {
+  
+    /** Add line item by ProductInfo[title, price] & addQuantity */
+    def addLineItem(product: ProductInfo, addQuantity: Int): Task[Unit] = {
       data.modify { entries =>
         // Check if the product already exists in the entries
         entries.get(product.title) match {
           case None =>
             // If the product doesn't exist, add it with the given count
-            (None, entries.updated(product.title, (product.price, addCount)))
+            (None, entries.updated(product.title, (product.price, addQuantity)))
           case Some((existingPrice, existingCount)) =>
             // If the product exists, update the count by adding the new count
-            (Some, entries.updated(product.title, (existingPrice, existingCount + addCount)))
+            (Some, entries.updated(product.title, (existingPrice, existingCount + addQuantity)))
         }
-      }.as((): Unit)
+      }
     }
-
-    /** Subtotal, rounded. */
+  
+    /** Calculate subtotal, rounded up */
     def subtotal: UIO[BigDecimal] =
       data.get.map { entries =>
         entries
@@ -40,23 +40,23 @@ object CartService extends CartI:
           }
           .setScale(DecimalScale, RoundingMode)
       }
-
-    /** Tax payable, rounded. */
+  
+    /** Calculate Tax payable, rounded up */
     def taxPayable: UIO[BigDecimal] =
       subtotal.map(st => (st * TaxRate).setScale(DecimalScale, RoundingMode))
-
-    /** Total payable, rounded. */
+  
+    /** Calculate Total payable, rounded up */
     def totalPayable: UIO[BigDecimal] =
       for
         st <- subtotal
         tax <- taxPayable
       yield (st + tax).setScale(DecimalScale, RoundingMode)
-
-    /** Number of products in cart */
+  
+    /** Calculate Number of products in cart */
     def numLineItems: UIO[Int] =
       data.get.map(_.size)
-
-    /** Number of items in cart */
+  
+    /** Calculate Number of items (total quantity) in cart */
     def numItems: UIO[Int] =
       data.get.map { entries =>
         entries.values.map { case (_, count) => count }.sum
