@@ -15,9 +15,9 @@ object CerealService:
   private val req = basicRequest
 
   def priceLookup(productTitle: String): ZIO[Any, Throwable, Float] =
-      if (productTitle == null || productTitle.isEmpty) {
+      if (productTitle == null || productTitle.isEmpty)
         ZIO.fail(new IllegalArgumentException("Input must be non-empty String"))
-      }  else {
+      else
         val request = basicRequest.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
         for {
           backend <- HttpClientZioBackend() // Create the HTTP client
@@ -25,4 +25,3 @@ object CerealService:
           _ <- ZIO.logInfo(s"Response Code: ${response.code}, Response Body: ${response.body}")
           ret <- ZIO.fromEither(response.body.map(_.price)).orElse(ZIO.from(0.0f))// return price or default to 0.0
         } yield ret
-      }
