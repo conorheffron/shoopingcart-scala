@@ -5,7 +5,7 @@ import zio.Scope
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 
 object CartServiceSpec extends ZIOSpecDefault {
-  override def spec: Spec[TestEnvironment & Scope, Any] = suite("Shopping Cart")(
+  override def spec: Spec[TestEnvironment & Scope, Any] = suite("Shopping Cart Service")(
     test("Add 2 × cornflakes @ 2.52 each,\n" +
       "Add 1 × weetabix @ 9.98 each,\n" +
       "Subtotal = 15.02,\n" +

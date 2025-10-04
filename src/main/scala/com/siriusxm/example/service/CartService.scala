@@ -1,7 +1,7 @@
 package com.siriusxm.example.service
 
 import com.siriusxm.example.dto.ProductInfo
-import com.siriusxm.example.service.ProductPriceService.priceLookup
+import com.siriusxm.example.service.ProductPriceService.findPriceByProductTitle
 import zio.{Ref, Task, UIO}
 
 import java.math.RoundingMode
@@ -12,7 +12,7 @@ object CartService extends CartI:
   class ShoppingCart(private val data: Ref[Entries]):
     /** Add line item by product title, looking up price. */
     def addLineItem(title: String, count: Int): Task[Unit] =
-      for price <- priceLookup(title)
+      for price <- findPriceByProductTitle(title)
           _ <- addLineItem(ProductInfo(title, price), count)
       yield ()
 

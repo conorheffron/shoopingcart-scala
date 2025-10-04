@@ -15,7 +15,7 @@ object CartAppDefault extends ZIOAppDefault {
 
   private def getProductInfo(validProducts: Set[String]): ZIO[Any, Throwable, String] = {
     ZIO.foreach(validProducts) { product =>
-      ProductPriceService.priceLookup(product).map { price =>
+      ProductPriceService.findPriceByProductTitle(product).map { price =>
         s"Product: $product, Price=$price"
       }
     }.map(_.mkString(" | "))
