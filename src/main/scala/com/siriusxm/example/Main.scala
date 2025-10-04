@@ -1,6 +1,6 @@
 package com.siriusxm.example
 
-import com.siriusxm.example.cart.CerealProductInfo
+import com.siriusxm.example.service.CerealService
 import zio.{Console, ZIO, ZIOAppDefault}
 
 object Main extends ZIOAppDefault {
@@ -15,7 +15,7 @@ object Main extends ZIOAppDefault {
 
   private def getProductInfo(validProducts: Set[String]): ZIO[Any, Throwable, String] = {
     ZIO.foreach(validProducts) { product =>
-      CerealProductInfo.priceLookup(product).map { price =>
+      CerealService.priceLookup(product).map { price =>
         s"Product: ${product}, Price=${price}"
       }
     }.map(_.mkString("\n"))
