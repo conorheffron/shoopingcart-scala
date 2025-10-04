@@ -19,9 +19,9 @@ object CerealService:
         ZIO.fail(new IllegalArgumentException("Input must be non-empty String"))
       else
         val request = basicRequest.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
-        for {
+        for
           backend <- HttpClientZioBackend() // Create the HTTP client
           response <- request.response(asJson[ProductInfo]).send(backend) // Send the request
           _ <- ZIO.logInfo(s"Response Code: ${response.code}, Response Body: ${response.body}")
           ret <- ZIO.fromEither(response.body.map(_.price)).orElse(ZIO.from(0.0f))// return price or default to 0.0
-        } yield ret
+        yield ret
