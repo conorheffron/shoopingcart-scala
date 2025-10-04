@@ -1,12 +1,10 @@
-package com.siriusxm.example.cart
+package com.siriusxm.example.service
 
-import zio.test.assertTrue
-import zio.test.Spec
-import zio.test.TestEnvironment
-import zio.test.ZIOSpecDefault
+import com.siriusxm.example.service.CartService
 import zio.Scope
+import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 
-object ShoppingCartSpec extends ZIOSpecDefault {
+object CartServiceSpec extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment & Scope, Any] = suite("Shopping Cart")(
     test("Add 2 × cornflakes @ 2.52 each,\n" +
       "Add 1 × weetabix @ 9.98 each,\n" +
@@ -15,7 +13,7 @@ object ShoppingCartSpec extends ZIOSpecDefault {
       "Total = 16.90,\n" +
       "Total No. of items in cart = 3 (2 + 1),\n" +
       "Total No. of products in cart = 2") {
-      for cart <- ShoppingCart.newCart
+      for cart <- CartService.newCart
         _ <- cart.addLineItem("cornflakes", 2)
         _ <- cart.addLineItem("weetabix", 1)
         subtotal <- cart.subtotal
@@ -27,7 +25,7 @@ object ShoppingCartSpec extends ZIOSpecDefault {
     },
 
     test("Add 6 x cornflakes & 1 x weetabix") {
-      for cart <- ShoppingCart.newCart
+      for cart <- CartService.newCart
           _ <- cart.addLineItem("cornflakes", 2)
           _ <- cart.addLineItem("cornflakes", 2)
           _ <- cart.addLineItem("corn flakes", 2)

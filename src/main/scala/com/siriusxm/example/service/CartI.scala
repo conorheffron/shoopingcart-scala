@@ -1,11 +1,10 @@
-package com.siriusxm.example.cart
+package com.siriusxm.example.service
 
-import ShoppingCart.ShoppingCart
+import com.siriusxm.example.service.CartService.ShoppingCart
 import zio.{Ref, UIO}
 
-trait Cart {
-  // Tax payable, charged at 12.5% on the subtotal
-  protected val TaxRate = 0.125d
+trait CartI {
+  protected val TaxRate = 0.125d // Tax payable, charged at 12.5% on the subtotal
   protected val DecimalScale = 2 // money rounded to 2 decimal places
   protected val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP
 
