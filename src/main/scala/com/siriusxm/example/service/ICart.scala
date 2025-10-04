@@ -1,7 +1,7 @@
 package com.siriusxm.example.service
 
 import com.siriusxm.example.service.CartService.ShoppingCart
-import zio.UIO
+import zio.{Ref, UIO}
 
 trait ICart {
   protected val TaxRate = 0.125d // Tax payable, charged at 12.5% on the subtotal
