@@ -7,7 +7,7 @@ import zio.{Ref, Task, UIO}
 import java.math.RoundingMode
 import scala.math.BigDecimal
 
-object CartService extends ICart:
+object CartService extends CartI:
 
   class ShoppingCart(private val data: Ref[Entries]):
     /** Add line item by product title, looking up price. */

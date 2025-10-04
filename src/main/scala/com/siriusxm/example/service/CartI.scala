@@ -3,7 +3,7 @@ package com.siriusxm.example.service
 import com.siriusxm.example.service.CartService.ShoppingCart
 import zio.{Ref, UIO}
 
-trait ICart {
+trait CartI {
   protected val TaxRate = 0.125d // Tax payable, charged at 12.5% on the subtotal
   protected val DecimalScale = 2 // money rounded to 2 decimal places
   protected val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP

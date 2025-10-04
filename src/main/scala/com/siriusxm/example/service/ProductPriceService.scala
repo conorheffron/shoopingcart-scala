@@ -8,7 +8,6 @@ import zio.ZIO
 
 object ProductPriceService:
   private val baseUrl = "https://raw.githubusercontent.com/mattjanks16/shopping-cart-test-data/main"
-  private val req = basicRequest
 
   def priceLookup(productTitle: String): ZIO[Any, Throwable, Float] =
       if (productTitle == null || productTitle.isEmpty)
