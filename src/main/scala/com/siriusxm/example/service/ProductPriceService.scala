@@ -18,7 +18,7 @@ object ProductPriceService:
         findPriceByProductTitle(request)
 
   /** Use ZIO.scoped to manage the lifecycle of the HTTP client */
-  def findPriceByProductTitle(request: Request[Either[String, String]]): ZIO[Any, Throwable, Float] =
+  private def findPriceByProductTitle(request: Request[Either[String, String]]): ZIO[Any, Throwable, Float] =
     ZIO.scoped {
       for {
         httpClient <- HttpClientZioBackend.scoped() // Open HTTP client connection
