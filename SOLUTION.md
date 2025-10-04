@@ -9,7 +9,7 @@
 [SonarQube Overall Code Summary](https://sonarcloud.io/summary/overall?id=conorheffron_shoppingcart-scala&branch=main)
 
 ## Tech:
- - SBT 1.11.6, Scala 3.7.2, ZIO 2
+ - Java 21 (LTS), SBT 1.11.6, Scala 3.7.2, ZIO 2, IntelliJ IDEA 2025.2.1 (Community Edition), SCoverage
 
 ## SBT shell build.
  - clean package test
