@@ -1,22 +1,13 @@
 package com.siriusxm.example.service
 
-import com.siriusxm.example.service.CartService.ShoppingCart
 import zio.{Ref, UIO}
 
 trait CartServiceI {
-  protected val TaxRate = 0.125d // Tax payable, charged at 12.5% on the subtotal
-  protected val DecimalScale = 2 // money rounded to 2 decimal places
-  protected val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP
-
-  protected type Entries = Map[ProductTitle, (Price, Count)]
+  type Entries = Map[ProductTitle, (Price, Count)]
 
   private type ProductTitle = String
   private type Price = Float
   private type Count = Int
 
-  private val EmptyEntries: Entries = Map.empty
-
-  /** Creates new instance of an empty shopping cart */
-  def newCart: UIO[ShoppingCart] =
-    Ref.make(EmptyEntries).map(new ShoppingCart(_))
+  val EmptyEntries: Entries = Map.empty
 }

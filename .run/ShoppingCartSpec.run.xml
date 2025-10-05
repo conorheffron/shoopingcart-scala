@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CartAppDefaultSpec" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.siriusxm.example.cart.CartAppDefaultSpec" />
+  <configuration default="false" name="ShoppingCartSpec" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.siriusxm.example.service.ShoppingCartSpec" />
     <module name="shopping-cart.test" />
     <extension name="coverage">
       <pattern>

@@ -4,7 +4,7 @@
     <module name="shopping-cart.test" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.siriusxm.example.service.*" />
+        <option name="PATTERN" value="com.siriusxm.example.dto.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

@@ -1,5 +1,6 @@
 package com.siriusxm.example.service
 
+import com.siriusxm.example.dto.ShoppingCart
 import com.siriusxm.example.service.CartService
 import zio.Scope
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
@@ -13,9 +14,9 @@ object CartServiceSpec extends ZIOSpecDefault {
       "Total = 16.90,\n" +
       "Total No. of items in cart = 3 (2 + 1),\n" +
       "Total No. of products in cart = 2") {
-      for cart <- CartService.newCart
-        _ <- cart.addLineItem("cornflakes", 2)
-        _ <- cart.addLineItem("weetabix", 1)
+      for cart <- ShoppingCart.newCart
+        _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+        _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
         subtotal <- cart.subtotal
         tax <- cart.taxPayable
         total <- cart.totalPayable
@@ -25,11 +26,11 @@ object CartServiceSpec extends ZIOSpecDefault {
     },
 
     test("Add 6 x cornflakes & 1 x weetabix") {
-      for cart <- CartService.newCart
-          _ <- cart.addLineItem("cornflakes", 2)
-          _ <- cart.addLineItem("cornflakes", 2)
-          _ <- cart.addLineItem("corn flakes", 2)
-          _ <- cart.addLineItem("weetabix", 1)
+      for cart <- ShoppingCart.newCart
+          _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "corn flakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
           subtotal <- cart.subtotal
           tax <- cart.taxPayable
           total <- cart.totalPayable
