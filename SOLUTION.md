@@ -22,12 +22,22 @@
 ## Main class run - prints each valid product info
 ![main-list-products-info](screenshots/main-list-products-info.png)
 
-## HTTP GET Request Sample
+## Run Rest API Application
+```
+com.siriusxm.example.RestApiApplication
+```
 
-### GET Request End-point
+### GET Request End-point (Browser Link)
 ```
 http://localhost:8080/product/info?titles=cheerios,cornflakes,frosties,shreddies,weetabix
 ```
 
-### Response JSON in Browser (key, value pairs of product_name -> price)
+### GET Request End-point (Curl)
+```
+shopping-cart-scala % curl -Xcurl -XGET "http://localhost:8080/product/info?titles=cheerios,cornflakes"                            
+
+{"cheerios":8.43,"cornflakes":2.52}
+```
+
+### GET Response JSON in Browser (key, value pairs of product_name -> price)
 ![GET-product-info-endpoint](screenshots/GET-product-info-endpoint.png)

@@ -5,13 +5,13 @@ import zio.{Unsafe, ZIO, ZIOAppDefault}
 
 object CartAppDefault extends ZIOAppDefault {
 
-  private final val validProducts = Set("cheerios", "cornflakes", "frosties", "shreddies", "weetabix", "fake_brand")
+  private final val defaultProducts = Set("cheerios", "cornflakes", "frosties", "shreddies", "weetabix", "fake_brand")
 
   /* Main process for app run -> logs valid product information
   including one missing JSON object / file ('fake_brand'). */
   override def run: ZIO[Any, Throwable, Unit] = {
-    getProductInfoStr(validProducts).flatMap { resultString =>
-      ZIO.logInfo(s"The result of CartAppDefault.getProductInfoStr is $resultString")
+    getProductInfoStr(defaultProducts).flatMap { resultStr =>
+      ZIO.logInfo(s"The result of CartAppDefault.getProductInfoStr is $resultStr")
     }
   }
 
@@ -19,7 +19,7 @@ object CartAppDefault extends ZIOAppDefault {
     getProductInfoMap(products)
   }
 
-  /* getProductInfo calls findPriceByProductTitle for each product title 
+  /* getProductInfo calls findPriceByProductTitle for each product title
   & returns formatted string including all results */
   private def getProductInfoStr(products: Set[String]): ZIO[Any, Throwable, String] = {
     ZIO.foreach(products) { product =>

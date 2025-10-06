@@ -3,12 +3,10 @@ package com.siriusxm.example
 import com.siriusxm.example.cart.CartAppDefault
 import sttp.tapir.*
 import sttp.tapir.server.netty.sync.NettySyncServer
-import zio.json.{EncoderOps, JsonEncoder}
+import zio.json.EncoderOps
 
-@main def Application(): Unit =
-
-  given mapStringFloatEncoder: JsonEncoder[Map[String, Float]] = JsonEncoder.map[String, Float]
-
+@main def RestApiApplication(): Unit =
+  
   val productsInfoEndpoint = endpoint
     .get
     .in("product" / "info")
