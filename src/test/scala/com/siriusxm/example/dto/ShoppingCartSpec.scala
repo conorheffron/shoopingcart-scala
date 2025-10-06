@@ -17,7 +17,6 @@ object ShoppingCartSpec extends ZIOSpecDefault {
         result <- cart.getCartEntries.get
       } yield assert(result)(equalTo(Map.empty))
     },
-
     test("getCartEntries 2 Initial Entries without Price") {
       for {
         cart <- ShoppingCart.newCart
