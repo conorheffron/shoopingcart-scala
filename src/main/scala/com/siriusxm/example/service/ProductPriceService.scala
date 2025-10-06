@@ -17,7 +17,7 @@ object ProductPriceService:
         val request = basicRequest.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
         findPriceByProductTitle(request)
 
-  /** Use ZIO.scoped to manage the lifecycle of the HTTP client */
+  /* Use ZIO.scoped to manage the lifecycle of the HTTP client */
   private def findPriceByProductTitle(request: Request[Either[String, String]]): ZIO[Any, Throwable, Float] =
     ZIO.scoped {
       for {

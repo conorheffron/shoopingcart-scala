@@ -1,5 +1,6 @@
 package com.siriusxm.example.service
 
+import com.siriusxm.example.dto.ShoppingCart
 import com.siriusxm.example.service.CartService
 import zio.Scope
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
@@ -13,28 +14,28 @@ object CartServiceSpec extends ZIOSpecDefault {
       "Total = 16.90,\n" +
       "Total No. of items in cart = 3 (2 + 1),\n" +
       "Total No. of products in cart = 2") {
-      for cart <- CartService.newCart
-        _ <- cart.addLineItem("cornflakes", 2)
-        _ <- cart.addLineItem("weetabix", 1)
-        subtotal <- cart.subtotal
-        tax <- cart.taxPayable
-        total <- cart.totalPayable
-        ni <- cart.numItems
-        nli <- cart.numLineItems
+      for cart <- ShoppingCart.newCart
+        _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+        _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
+        subtotal <- CartService.subtotal(cart.getCartEntries)
+        tax <- CartService.taxPayable(cart.getCartEntries)
+        total <- CartService.totalPayable(cart.getCartEntries)
+        ni <- CartService.numItems(cart.getCartEntries)
+        nli <- CartService.numLineItems(cart.getCartEntries)
       yield assertTrue((subtotal, tax, total, ni, nli) == (15.02, 1.88, 16.90, 3, 2))
     },
 
     test("Add 6 x cornflakes & 1 x weetabix") {
-      for cart <- CartService.newCart
-          _ <- cart.addLineItem("cornflakes", 2)
-          _ <- cart.addLineItem("cornflakes", 2)
-          _ <- cart.addLineItem("corn flakes", 2)
-          _ <- cart.addLineItem("weetabix", 1)
-          subtotal <- cart.subtotal
-          tax <- cart.taxPayable
-          total <- cart.totalPayable
-          ni <- cart.numItems
-          nli <- cart.numLineItems
+      for cart <- ShoppingCart.newCart
+          _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "corn flakes", 2)
+          _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
+          subtotal <- CartService.subtotal(cart.getCartEntries)
+          tax <- CartService.taxPayable(cart.getCartEntries)
+          total <- CartService.totalPayable(cart.getCartEntries)
+          ni <- CartService.numItems(cart.getCartEntries)
+          nli <- CartService.numLineItems(cart.getCartEntries)
       yield assertTrue((subtotal, tax, total, ni, nli) == (20.06, 2.51, 22.57, 7, 3))
     },
   )
