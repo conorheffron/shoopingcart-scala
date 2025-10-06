@@ -12,10 +12,10 @@ object ShoppingCartSpec extends ZIOSpecDefault {
     test("getCartEntries with Line Items that have quantity set") {
       for {
         cart <- ShoppingCart.newCart
-        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Nesquik", 3.90f), 5)
-        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Flahavans Oats", 3.70f), 2)
-        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Oreo Cereal", 3.80f), 3)
-        result <- cart.getCartEntries.get
+        _ <- CartService.addLineItem(cart.data, ProductInfo("Nesquik", 3.90f), 5)
+        _ <- CartService.addLineItem(cart.data, ProductInfo("Flahavans Oats", 3.70f), 2)
+        _ <- CartService.addLineItem(cart.data, ProductInfo("Oreo Cereal", 3.80f), 3)
+        result <- cart.data.get
       } yield assert(result)(
         equalTo(Map("Nesquik" -> (3.90f, 5),
           "Flahavans Oats"-> (3.70f, 2),
@@ -26,15 +26,15 @@ object ShoppingCartSpec extends ZIOSpecDefault {
     test("getCartEntries Empty Map") {
       for {
         cart <- ShoppingCart.newCart
-        result <- cart.getCartEntries.get
+        result <- cart.data.get
       } yield assert(result)(equalTo(Map.empty))
     },
     test("getCartEntries 2 Initial Entries without Price") {
       for {
         cart <- ShoppingCart.newCart
-        _ <- CartService.addLineItem(cart.getCartEntries, "Nesquik", 2)
-        _ <- CartService.addLineItem(cart.getCartEntries, "Flahavans Oats", 2)
-        result <- cart.getCartEntries.get
+        _ <- CartService.addLineItem(cart.data, "Nesquik", 2)
+        _ <- CartService.addLineItem(cart.data, "Flahavans Oats", 2)
+        result <- cart.data.get
       } yield assert(result)(equalTo(
         Map(
           "Nesquik" -> (0f, 2),

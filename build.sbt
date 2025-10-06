@@ -6,13 +6,14 @@ val V = new {
   val tapir = "1.11.47"
   val logback = "1.5.19"
   val mUnit = "1.0.4"
+  val pureConf = "0.17.9"
 }
 
 lazy val root = project
   .in(file("."))
   .settings(
     name := "shopping-cart",
-    version := "1.0.16-RELEASE",
+    version := "1.0.17-RELEASE",
 
     scalaVersion := scala3Version,
 
@@ -24,6 +25,7 @@ lazy val root = project
       "com.softwaremill.sttp.client4" %% "zio" % V.sttp,
       "io.getquill" %% "quill-jdbc-zio" % V.quill,
       "ch.qos.logback" % "logback-classic" % V.logback,
+      "com.github.pureconfig" %% "pureconfig-core" % V.pureConf,
     ),
 
     // Test scope
