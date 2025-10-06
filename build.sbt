@@ -3,6 +3,7 @@ val V = new {
   val quill = "4.8.0"
   val zio = "2.0.18"
   val sttp = "4.0.0-M6"
+  val tapir = "1.11.47"
 }
 
 lazy val root = project
@@ -15,6 +16,8 @@ lazy val root = project
 
     // Compile scope
     libraryDependencies ++= Seq(
+      "com.softwaremill.sttp.tapir" %% "tapir-core" % V.tapir,
+      "com.softwaremill.sttp.tapir" %% "tapir-netty-server-sync" % V.tapir,
       "com.softwaremill.sttp.client4" %% "zio-json" % V.sttp,
       "com.softwaremill.sttp.client4" %% "zio" % V.sttp,
       "io.getquill" %% "quill-jdbc-zio" % V.quill,
