@@ -9,6 +9,20 @@ import scala.collection.Map
 
 object ShoppingCartSpec extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment & Scope, Any] = suite("Shopping Cart")(
+    test("getCartEntries with Line Items that have quantity set") {
+      for {
+        cart <- ShoppingCart.newCart
+        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Nesquik", 3.90f), 5)
+        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Flahavans Oats", 3.70f), 2)
+        _ <- CartService.addLineItem(cart.getCartEntries, ProductInfo("Oreo Cereal", 3.80f), 3)
+        result <- cart.getCartEntries.get
+      } yield assert(result)(
+        equalTo(Map("Nesquik" -> (3.90f, 5),
+          "Flahavans Oats"-> (3.70f, 2),
+          "Oreo Cereal" -> (3.80f, 3))
+        )
+      )
+    },
     test("getCartEntries Empty Map") {
       for {
         cart <- ShoppingCart.newCart
@@ -23,8 +37,8 @@ object ShoppingCartSpec extends ZIOSpecDefault {
         result <- cart.getCartEntries.get
       } yield assert(result)(equalTo(
         Map(
-          "Nesquik" -> (0, 2),
-          "Flahavans Oats"-> (0, 2)
+          "Nesquik" -> (0f, 2),
+          "Flahavans Oats"-> (0f, 2)
         ))
       )
     },
