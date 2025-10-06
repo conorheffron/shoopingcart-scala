@@ -8,6 +8,9 @@ import java.math.RoundingMode
 import scala.math.BigDecimal
 
 object CartService extends CartServiceI:
+  private val TaxRate = 0.125d // Tax payable, charged at 12.5% on the subtotal
+  private val DecimalScale = 2 // money rounded to 2 decimal places
+  private val RoundingMode: BigDecimal.RoundingMode.Value = BigDecimal.RoundingMode.UP
 
   /** Add line item by product title & quantity, findPriceByProductTitle provides price value if it exists. */
   def addLineItem(data: Ref[Entries], title: String, quantity: Int): Task[Unit] =
@@ -29,3 +32,34 @@ object CartService extends CartServiceI:
       }
     }
   }
+
+  /** Calculate Number of products in cart */
+  def numLineItems(data: Ref[Entries]): UIO[Int] =
+    data.get.map(_.size)
+
+  /** Calculate Number of items (total quantity) in cart */
+  def numItems(data: Ref[Entries]): UIO[Int] =
+    data.get.map { entries =>
+      entries.values.map { case (_, count) => count }.sum
+    }
+
+  /** Calculate subtotal, rounded up */
+  def subtotal(data: Ref[Entries]): UIO[BigDecimal] =
+    data.get.map { entries =>
+      entries
+        .foldLeft(BigDecimal(0)) { case (sum, (_, (price, count))) =>
+          sum + BigDecimal(price) * count
+        }
+        .setScale(DecimalScale, RoundingMode)
+    }
+
+  /** Calculate Tax payable, rounded up */
+  def taxPayable(data: Ref[Entries]): UIO[BigDecimal] =
+    subtotal(data).map(st => (st * TaxRate).setScale(DecimalScale, RoundingMode))
+
+  /** Calculate Total payable, rounded up */
+  def totalPayable(data: Ref[Entries]): UIO[BigDecimal] =
+    for
+      st <- subtotal(data)
+      tax <- taxPayable(data)
+    yield (st + tax).setScale(DecimalScale, RoundingMode)

@@ -17,11 +17,11 @@ object CartServiceSpec extends ZIOSpecDefault {
       for cart <- ShoppingCart.newCart
         _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
         _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
-        subtotal <- cart.subtotal
-        tax <- cart.taxPayable
-        total <- cart.totalPayable
-        ni <- cart.numItems
-        nli <- cart.numLineItems
+        subtotal <- CartService.subtotal(cart.getCartEntries)
+        tax <- CartService.taxPayable(cart.getCartEntries)
+        total <- CartService.totalPayable(cart.getCartEntries)
+        ni <- CartService.numItems(cart.getCartEntries)
+        nli <- CartService.numLineItems(cart.getCartEntries)
       yield assertTrue((subtotal, tax, total, ni, nli) == (15.02, 1.88, 16.90, 3, 2))
     },
 
@@ -31,11 +31,11 @@ object CartServiceSpec extends ZIOSpecDefault {
           _ <- CartService.addLineItem(cart.getCartEntries, "cornflakes", 2)
           _ <- CartService.addLineItem(cart.getCartEntries, "corn flakes", 2)
           _ <- CartService.addLineItem(cart.getCartEntries, "weetabix", 1)
-          subtotal <- cart.subtotal
-          tax <- cart.taxPayable
-          total <- cart.totalPayable
-          ni <- cart.numItems
-          nli <- cart.numLineItems
+          subtotal <- CartService.subtotal(cart.getCartEntries)
+          tax <- CartService.taxPayable(cart.getCartEntries)
+          total <- CartService.totalPayable(cart.getCartEntries)
+          ni <- CartService.numItems(cart.getCartEntries)
+          nli <- CartService.numLineItems(cart.getCartEntries)
       yield assertTrue((subtotal, tax, total, ni, nli) == (20.06, 2.51, 22.57, 7, 3))
     },
   )
