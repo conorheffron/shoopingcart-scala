@@ -14,10 +14,10 @@ object CartAppDefaultSpec extends ZIOSpecDefault {
     },
     test("Test the run function completes successfully for all default products") {
       // A ZIO effect that produces a string
-      val effect = CartAppDefault.run
+      val resultEffect = CartAppDefault.run
 
       // Run the effect and assert that the string contains "ZIO"
-      assertZIO(effect)(
+      assertZIO(resultEffect) (
         containsString("frosties -> 4.99 | " +
           "fake_brand -> 0.0 | " +
           "cornflakes -> 2.52 | " +
