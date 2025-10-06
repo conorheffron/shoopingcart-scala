@@ -8,7 +8,7 @@ class ShoppingCart(private val data: Ref[Entries]):
 
 // ShoppingCart companion object for creating instances
 object ShoppingCart {
-  /** Creates new instance of an empty shopping cart */
+  /* Creates new instance of an empty shopping cart */
   def newCart: UIO[ShoppingCart] =
     Ref.make(Map.empty).map(new ShoppingCart(_))
 }
