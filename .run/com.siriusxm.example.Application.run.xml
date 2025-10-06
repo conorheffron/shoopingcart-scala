@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="com.siriusxm.example.Application" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.siriusxm.example.Application" />
+    <module name="shopping-cart.main" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.siriusxm.example.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

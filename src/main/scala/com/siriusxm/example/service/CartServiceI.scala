@@ -1,7 +1,5 @@
 package com.siriusxm.example.service
 
-import zio.{Ref, UIO}
-
 trait CartServiceI {
 
   // constants / enum vals
