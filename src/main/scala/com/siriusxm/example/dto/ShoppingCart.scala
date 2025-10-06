@@ -3,8 +3,7 @@ package com.siriusxm.example.dto
 import com.siriusxm.example.service.CartService.Entries
 import zio.{Ref, UIO}
 
-class ShoppingCart(private val data: Ref[Entries]):
-  def getCartEntries: Ref[Entries] = data
+class ShoppingCart(val data: Ref[Entries])
 
 // ShoppingCart companion object for creating instances
 object ShoppingCart {

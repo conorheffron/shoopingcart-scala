@@ -7,14 +7,12 @@ import sttp.client4.{Request, UriContext, basicRequest}
 import sttp.model.StatusCode
 import zio.ZIO
 
-object ProductPriceService:
-  private val baseUrl = "https://conorheffron.github.io/shopping-cart-test-data/"
-
+object ProductPriceService extends ProductPriceServiceI:
   def findPriceByProductTitle(productTitle: String): ZIO[Any, Throwable, Float] =
       if (productTitle == null || productTitle.isEmpty)
         ZIO.fail(new IllegalArgumentException("Input must be non-empty String"))
       else
-        val request = basicRequest.get(uri"$baseUrl/${productTitle.toLowerCase}.json")
+        val request = basicRequest.get(uri"$productBaseUrl/${productTitle.toLowerCase}.json")
         findPriceByProductTitle(request)
 
   /* Use ZIO.scoped to manage the lifecycle of the HTTP client */
