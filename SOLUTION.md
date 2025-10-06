@@ -24,7 +24,7 @@
 
 ## Run Rest API Application
 ```
-com.siriusxm.example.RestApiApplication
+com.siriusxm.example.restApiApplication
 ```
 
 ### GET Request End-point (Browser Link)

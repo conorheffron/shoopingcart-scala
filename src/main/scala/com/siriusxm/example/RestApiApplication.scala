@@ -5,7 +5,7 @@ import sttp.tapir.*
 import sttp.tapir.server.netty.sync.NettySyncServer
 import zio.json.EncoderOps
 
-@main def RestApiApplication(): Unit =
+@main def restApiApplication(): Unit =
   
   val productsInfoEndpoint = endpoint
     .get

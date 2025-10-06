@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="RestApiApplication Run" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.siriusxm.example.RestApiApplication" />
+    <option name="MAIN_CLASS_NAME" value="com.siriusxm.example.restApiApplication" />
     <module name="shopping-cart.main" />
     <method v="2">
       <option name="Make" enabled="true" />
