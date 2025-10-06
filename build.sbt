@@ -12,7 +12,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "shopping-cart",
-    version := "1.0.15-RELEASE",
+    version := "1.0.16-RELEASE",
 
     scalaVersion := scala3Version,
 
@@ -30,6 +30,8 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "dev.zio" %% "zio-test" % V.zio % Test,
       "dev.zio" %% "zio-test-sbt" % V.zio % Test,
+      "com.softwaremill.sttp.tapir" %% "sttp-mock-server" % V.tapir % Test,
+      "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub4-server" % V.tapir % Test,
       "org.scalameta" %% "munit" % V.mUnit % Test,
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
