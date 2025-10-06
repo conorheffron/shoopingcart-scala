@@ -1,11 +1,9 @@
 package com.siriusxm.example.dto
 
-import com.siriusxm.example.dto.ProductInfo
 import com.siriusxm.example.service.CartService
-import com.siriusxm.example.service.CartService.{EmptyEntries, Entries}
 import zio.test.Assertion.equalTo
-import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assert, assertTrue}
-import zio.{Ref, Scope, ZIO}
+import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assert}
+import zio.Scope
 
 import scala.collection.Map
 
