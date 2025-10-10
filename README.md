@@ -10,6 +10,9 @@
 
 [Shopping Cart Test Data (product title & price)](https://github.com/conorheffron/shopping-cart-test-data)
 
+### Overview
+ - [https://github.com/conorheffron/shoppingcart-scala/blob/main/SOLUTION.md](https://github.com/conorheffron/shoppingcart-scala/blob/main/SOLUTION.md)
+
 ### If cloning the repo
 1. Clone this repository on your machine.
 2. Use your IDE of choice to complete the assignment.
