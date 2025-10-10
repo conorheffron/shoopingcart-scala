@@ -12,7 +12,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "shopping-cart",
-    version := "1.0.18-RELEASE",
+    version := "1.0.19-RELEASE",
 
     scalaVersion := scala3Version,
 
